@@ -7,5 +7,7 @@ sqlite3.def
 serverlist.txt
 *.db
 .env
+.env.old
 package-lock.json.old
 src/files/serverlist.txt
+.env.main

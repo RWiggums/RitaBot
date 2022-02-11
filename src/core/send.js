@@ -318,16 +318,13 @@ function reactpersist (data, msg)
       try
       {
 
-         setTimeout(() => msg.delete(), auth.time.long);
+         setTimeout(() => msg.delete(), auth.time.long).catch((err) => logger("dev", `Command Message Deleted Error, send.js = Line 327 ${err}`));
 
       }
-      catch (err)
+      catch
       {
 
-         console.log(
-            "Command Message Deleted Error, send.js = Line 327",
-            err
-         );
+         console.log("Command Message Deleted Error, send.js = Line 327");
 
       }
 

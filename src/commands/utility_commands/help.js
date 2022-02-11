@@ -9,6 +9,7 @@ const discord = require("discord.js");
 const embed = new discord.MessageEmbed();
 const auth = require("../../core/auth");
 const helpFooter = `**For more help join our official [support server](<https://discord.gg/hXaedzCQ8d>)**\n\n`;
+const logger = require("../../core/logger");
 
 // -------------
 // Help Section
@@ -831,21 +832,18 @@ module.exports = function run (data)
          try
          {
 
-            setTimeout(() => data.message.delete(), auth.time.short);
+            setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `DEBUG: Command Message Deleted Error, help.js = Line 830 ${err}`));
 
          }
-         catch (err)
+         catch
          {
 
-            console.log(
-               "DEBUG: Command Message Deleted Error, help.js = Line 830",
-               err
-            );
+            console.log("DEBUG: Command Message Deleted Error, help.js = Line 830");
 
          }
          embed.
             setColor(colors.get(data.color)).
-            setDescription("This command is available only to Developers. \n\n").
+            setDescription("This command is available only to Developers.\n\n").
             setTimestamp().
             setFooter("This message will self-destruct in one minute");
 
@@ -859,16 +857,13 @@ module.exports = function run (data)
             try
             {
 
-               setTimeout(() => msg.delete(), auth.time.short);
+               setTimeout(() => msg.delete(), auth.time.short).catch((err) => logger("dev", `DEBUG: Command Message Deleted Error, help.js = Line 798 ${err}`));
 
             }
-            catch (err)
+            catch
             {
 
-               console.log(
-                  "DEBUG: Command Message Deleted Error, help.js = Line 798",
-                  err
-               );
+               console.log("DEBUG: Command Message Deleted Error, help.js = Line 798");
 
             }
 

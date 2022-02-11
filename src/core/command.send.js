@@ -33,16 +33,13 @@ async function sendMessage (data)
                try
                {
 
-                  setTimeout(() => msg.delete(), auth.time.long);
+                  setTimeout(() => msg.delete(), auth.time.long).catch((err) => logger("dev", `Bot Message Deleted Error 1, command.send.js ${err}`));
 
                }
-               catch (err)
+               catch
                {
 
-                  console.log(
-                     "Bot Message Deleted Error 1, command.send.js",
-                     err
-                  );
+                  // console.log("Bot Message Deleted Error 1, command.send.js");
 
                }
 
@@ -109,6 +106,12 @@ async function sendMessage (data)
                ));
 
          }
+         if (err.code && err.code === error.unknownMessage)
+         {
+
+            // return console.log("DEBUG: Already Delete a message");
+
+         }
 
       });
 
@@ -133,18 +136,16 @@ module.exports = function run (data)
       try
       {
 
-         setTimeout(() => data.message.delete(), auth.time.short);
+         setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Bot Message Deleted Error 2, command.send.js ${err}`));
 
       }
-      catch (err)
+      catch
       {
 
-         console.log(
-            "Bot Message Deleted Error 2, command.send.js",
-            err
-         );
+         console.log("Bot Message Deleted Error 2, command.send.js",);
 
       }
+
       embed.
          setColor(colors.get(data.color)).
          setDescription(`Developer Identity confirmed:\n\n${data.text}`).
@@ -161,16 +162,13 @@ module.exports = function run (data)
    try
    {
 
-      setTimeout(() => data.message.delete(), auth.time.short);
+      setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Bot Message Deleted Error 3, command.send.js ${err}`));
 
    }
-   catch (err)
+   catch
    {
 
-      console.log(
-         "Bot Message Deleted Error 3, command.send.js",
-         err
-      );
+      // console.log("Bot Message Deleted Error 3, command.send.js",);
 
    }
    embed.

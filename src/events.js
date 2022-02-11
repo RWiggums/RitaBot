@@ -45,10 +45,10 @@ exports.listen = function listen (client)
             "defaultLanguage": "en",
             "inviteURL": auth.invite || "Set this in your .env file / config variables in Heroku",
             "maxChainLen": 5,
-            "maxChains": 10,
+            "maxChains": 5,
             "maxEmbeds": 5,
-            "maxMulti": 6,
-            "maxTasksPerChannel": 15,
+            "maxMulti": 5,
+            "maxTasksPerChannel": 10,
             "translateCmd": "!translate",
             "translateCmdShort": "!tr",
             "version": botVersion

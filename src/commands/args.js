@@ -356,6 +356,7 @@ module.exports = function run (data)
             "ban": cmdMod.ban,
             "blacklist": cmdBlacklist.blacklist,
             "bot2bot": cmdBot2bot,
+            "cache": cmdMisc.cache,
             "check": cmdCheck,
             "cl": cmdCL,
             "create": cmdCreate,

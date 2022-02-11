@@ -195,7 +195,7 @@ async function announcement (data)
                               return;
 
                            }
-                           else if (server[0].announce === true)
+                           else if (server[0].announce === true || server[0].announce === 1)
                            {
 
                               console.log(`Message ${i} Sent to guild ${guild[1].id} - ${guild[1].name}`);
@@ -278,7 +278,7 @@ module.exports = function run (data)
    // Error if settings param is missing
    // -----------------------------------
 
-   if (data.message.isAdmin === true)
+   if (data.message.isDev === true)
    {
 
       if (data.cmd.params && data.cmd.params.toLowerCase().includes("off"))

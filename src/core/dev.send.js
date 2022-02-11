@@ -91,16 +91,13 @@ module.exports = function run (data)
       try
       {
 
-         setTimeout(() => data.message.delete(), auth.time.short);
+         setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Bot Message Deleted Error 1, dev.send.js ${err}`));
 
       }
-      catch (err)
+      catch
       {
 
-         console.log(
-            "Bot Message Deleted Error 1, dev.send.js",
-            err
-         );
+         console.log("Bot Message Deleted Error 1, dev.send.js");
 
       }
       embed.
@@ -118,16 +115,13 @@ module.exports = function run (data)
    try
    {
 
-      setTimeout(() => data.message.delete(), auth.time.short);
+      setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Bot Message Deleted Error 2, dev.send.js ${err}`));
 
    }
-   catch (err)
+   catch
    {
 
-      console.log(
-         "Bot Message Deleted Error 2 dev.send.js",
-         err
-      );
+      console.log("Bot Message Deleted Error 2 dev.send.js");
 
    }
    data.text = ":cop:  This Command is for bot developers only.";

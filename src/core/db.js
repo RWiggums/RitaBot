@@ -10,6 +10,7 @@
 const autoTranslate = require("./auto");
 const Sequelize = require("sequelize");
 const logger = require("./logger");
+const {oneLine} = require("common-tags");
 const Op = Sequelize.Op;
 let dbNewPrefix = "";
 const server_obj = {};
@@ -56,10 +57,7 @@ db.
    then(() =>
    {
 
-      logger(
-         "dev",
-         `----------------------------------------\nSuccessfully connected to database`
-      );
+      console.log(`----------------------------------------\nSuccessfully connected to database`);
 
    }).
    catch((err) =>
@@ -76,7 +74,7 @@ db.
 // Database stats table definition
 // ---------------------------------
 
-// console.log("DEBUG: Pre Stage Database stats table definition");
+console.log("DEBUG: Pre Stage Database stats table definition");
 const Stats = db.define(
    "stats",
    {
@@ -121,7 +119,7 @@ const Stats = db.define(
 // Database server table definition
 // ---------------------------------
 
-// console.log("DEBUG: Pre Stage Database server table definition");
+console.log("DEBUG: Pre Stage Database server table definition");
 const Servers = db.define(
    "servers",
    {
@@ -229,7 +227,7 @@ const Servers = db.define(
 // Database tasks table definition
 // --------------------------------
 
-// console.log("DEBUG: Pre Stage Database tasks table definition");
+console.log("DEBUG: Pre Stage Database tasks table definition");
 const Tasks = db.define(
    "tasks",
    {
@@ -274,7 +272,7 @@ const Tasks = db.define(
 exports.initializeDatabase = async function initializeDatabase (client)
 {
 
-   // console.log("DEBUG: Stage Init/create tables - Pre Sync");
+   console.log("DEBUG: Stage Init/create tables - Pre Sync");
    db.sync({logging: false}).then(async () =>
    {
 
@@ -284,7 +282,7 @@ exports.initializeDatabase = async function initializeDatabase (client)
       await Stats.upsert({logging: false,
          "id": "bot"});
       await this.updateColumns();
-      // console.log("DEBUG: New columns should be added Before this point.");
+      console.log("DEBUG: New columns should be added Before this point.");
       await Servers.upsert({logging: false,
          "id": "bot",
          "lang": "en"});
@@ -296,10 +294,17 @@ exports.initializeDatabase = async function initializeDatabase (client)
       const guilds = client.guilds.cache.array().length;
       const guildsArray = client.guilds.cache.array();
       let i = 0;
-      // console.log("DEBUG: Active Check all Active Guilds");
+      console.log("DEBUG: Active Check all Active Guilds");
       for (i = 0; i < guilds; i += 1)
       {
 
+         // console.log(`DEBUG: Check Guild ${i} `);
+         if (i === 1000 || i === 2000 || i === 3000 || i === 4000 || i === 5000 || i === 6000 || i === 7000 || i === 8000 || i === 9000 || i === 10000 || i === 11000 || i === 12000 || i === 13000 || i === 140000 || i === 15000 || i === 16000 || i === 17000 || i === 18000 || i === 19000)
+         {
+
+            console.log(`DEBUG: Check Guild ${i} `);
+
+         }
          guild = guildsArray[i];
          const guildID = guild.id;
          // eslint-disable-next-line no-await-in-loop
@@ -312,7 +317,7 @@ exports.initializeDatabase = async function initializeDatabase (client)
             if (projects.length === 0)
             {
 
-               // console.log("DEBUG: Add Server");
+               console.log("DEBUG: Add Server");
                Servers.upsert({logging: false,
                   "id": guildID,
                   "lang": "en",
@@ -322,14 +327,14 @@ exports.initializeDatabase = async function initializeDatabase (client)
 
             }
             // console.log("DEBUG: Active Check all Active Guilds");
-            Servers.upsert({logging: false,
-               "id": guildID,
-               "active": true});
+            // Servers.upsert({logging: false,
+            //   "id": guildID,
+            //   "active": true});
 
          });
 
       }
-      // console.log("DEBUG: Stage Init/create tables - Pre servers FindAll");
+      console.log("DEBUG: Stage Init/create tables - Pre servers FindAll");
       const serversFindAll = await Servers.findAll({logging: false});
       // {
       for (let i = 0; i < serversFindAll.length; i += 1)
@@ -346,7 +351,7 @@ exports.initializeDatabase = async function initializeDatabase (client)
          }
 
       }
-      // console.log("DEBUG: Stage Init/create tables - Pre guildClient");
+      console.log("DEBUG: Stage Init/create tables - Pre guildClient");
       const guildClient = Array.from(client.guilds.cache.values());
       for (let i = 0; i < guildClient.length; i += 1)
       {
@@ -365,6 +370,17 @@ exports.initializeDatabase = async function initializeDatabase (client)
       }
       console.log("----------------------------------------\nDatabase fully initialized.\n----------------------------------------");
       // });
+
+      logger(
+         "custom",
+         {
+            "color": "ok",
+            "msg": oneLine`
+            :wave:  **${client.user.username}**
+            - Database fully initialized.
+         `
+         }
+      );
 
    });
 

@@ -255,6 +255,100 @@ function getSettings (data)
 
    }
 
+   // --------------------
+   // Message Debug Value
+   // --------------------
+
+
+   function setMessageDebug (data)
+   {
+
+      if (data.message.isDev)
+      {
+
+         const messageDebugVariable = data.cmd.params.split(" ")[1].toLowerCase();
+         if (messageDebugVariable === "0" || messageDebugVariable === "1" || messageDebugVariable === "2" || messageDebugVariable === "3" || messageDebugVariable === "4" || messageDebugVariable === "5")
+         {
+
+            console.log(`DEBUG: Old Message Debug Value ${auth.messagedebug}`);
+            auth.messagedebug = messageDebugVariable;
+            console.log(`DEBUG: New Message Debug Value ${auth.messagedebug}`);
+
+            data.color = "ok";
+            data.text = `Message Debug Value set to ${messageDebugVariable}\n`;
+
+            // -------------
+            // Send message
+            // -------------
+
+            sendMessage(data);
+
+         }
+         else
+         {
+
+            data.color = "error";
+            data.text = `:warning:  **\`${messageDebugVariable}\`** is not a valid Message Debug option.\n`;
+
+            // -------------
+            // Send message
+            // -------------
+
+            return sendMessage(data);
+
+         }
+
+      }
+
+   }
+
+   // --------------------
+   // Debug Value
+   // --------------------
+
+
+   function setDebug (data)
+   {
+
+      if (data.message.isDev)
+      {
+
+         const debugVariable = data.cmd.params.split(" ")[1].toLowerCase();
+         if (debugVariable === "0" || debugVariable === "1")
+         {
+
+            console.log(`DEBUG: Old Debug Value ${auth.dev}`);
+            auth.dev = debugVariable;
+            console.log(`DEBUG: New Debug Value ${auth.dev}`);
+
+            data.color = "ok";
+            data.text = `Debug Value set to ${debugVariable}\n`;
+
+            // -------------
+            // Send message
+            // -------------
+
+            sendMessage(data);
+
+         }
+         else
+         {
+
+            data.color = "error";
+            data.text = `:warning:  **\`${debugVariable}\`** is not a valid Debug option.\n`;
+
+            // -------------
+            // Send message
+            // -------------
+
+            return sendMessage(data);
+
+         }
+
+      }
+
+   }
+
    // ------------------
    // React Persistence
    // ------------------
@@ -739,9 +833,11 @@ function getSettings (data)
    const validSettings = {
       // "announce": announcement,
       // add,
+      "dbug": setDebug,
       "flagpersist": setFlagPersistence,
       "langdetect": langDetect,
       "listservers": listServers,
+      "mdbug": setMessageDebug,
       "menupersist": setMenuPersistence,
       "ownerdb": ownerUpdate,
       "reactpersist": setReactPersistence,

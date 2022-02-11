@@ -16,6 +16,7 @@ const {oneLine} = require("common-tags");
 const secConverter = require("rita-seconds-converter");
 const sendMessage = require("../../core/command.send");
 const botSend = require("../../core/send");
+const logger = require("../../core/logger");
 
 // ------------
 // Invite Link
@@ -207,6 +208,35 @@ module.exports.proc = function proc (data)
 };
 
 // --------------
+// Cache Message
+// --------------
+
+module.exports.cache = function cache (data)
+{
+
+   // ------------------
+   // Gather ID Details
+   // ------------------
+
+   // console.log("DEBUG: ID Message");
+
+   data.text = stripIndent`
+   **:robot: Cached Client:** \`${data.message.client.user.username}\`
+   **:homes: Guilds:** \`${data.message.client.guilds.cache.size || "N/A"}\`
+   **:books: Channels:** \`${data.message.client.channels.cache.size || "N/A"}\`
+   **:people_holding_hands: Users:** \`${data.message.client.users.cache.size || "N/A"}\`
+   **:slight_smile: Emojis:** \`${data.message.client.emojis.cache.size || "N/A"}\`
+   **:heart: Message Lifetime:** \`${data.message.client.options.messageCacheLifetime || "N/A"}\`
+   **:broom: Sweep Interval:** \`${data.message.client.options.messageSweepInterval || "N/A"}\``;
+   // -------------
+   // Send message
+   // -------------
+
+   return sendMessage(data);
+
+};
+
+// --------------
 // Ident Message
 // --------------
 
@@ -273,16 +303,13 @@ module.exports.update = function update (data)
    try
    {
 
-      setTimeout(() => data.message.delete(), auth.time.short);
+      setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Command Message Deleted Error, misc.js = Line 299 ${err}`));
 
    }
-   catch (err)
+   catch
    {
 
-      console.log(
-         "Command Message Deleted Error, misc.js = Line 299",
-         err
-      );
+      console.log("Command Message Deleted Error, misc.js = Line 299");
 
    }
    return botSend(data);
@@ -307,16 +334,13 @@ module.exports.updatelink = async function updatelink (data)
    try
    {
 
-      setTimeout(() => data.message.delete(), auth.time.short);
+      setTimeout(() => data.message.delete(), auth.time.short).catch((err) => logger("dev", `Command Message Deleted Error, github.js = Line 333 ${err}`));
 
    }
-   catch (err)
+   catch
    {
 
-      console.log(
-         "Command Message Deleted Error, github.js = Line 333",
-         err
-      );
+      console.log("Command Message Deleted Error, github.js = Line 333");
 
    }
 
@@ -366,7 +390,7 @@ module.exports.updatelink = async function updatelink (data)
          messages.forEach((message) =>
          {
 
-            message.delete();
+            message.delete().catch((err) => logger("dev", `Clean ${err}`));
 
          });
 

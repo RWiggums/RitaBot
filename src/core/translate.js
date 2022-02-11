@@ -377,6 +377,13 @@ function updateServerStats (message)
 module.exports = function run (data) // eslint-disable-line complexity
 {
 
+   if (process.env.MAINTENANCE_MODE === "1")
+   {
+
+      return;
+
+   }
+
    // -------------------------
    // Report invalid languages
    // -------------------------
